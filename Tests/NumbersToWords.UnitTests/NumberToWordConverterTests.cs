@@ -21,7 +21,28 @@ namespace NumbersToWords.UnitTests
 
         [Theory]
         [InlineData(21, "twenty one")]
+        [InlineData(22, "twenty two")]
+        [InlineData(31, "thirty one")]
+        [InlineData(43, "fourty three")]
+        [InlineData(56, "fifty six")]
+        [InlineData(78, "seventy eight")]
+        [InlineData(83, "eighty three")]
+        [InlineData(91, "ninety one")]
         public void SutReturnsWordForTwoDigitNumbers(int number, string word)
+        {
+            var sut = new NumberToWordConverter();
+            var actual = sut.Convert(number);
+            Assert.Equal(word, actual);
+        }
+
+        [Theory]
+        [InlineData(100, "one hundred")]
+        [InlineData(108, "one hundred and eight")]
+        [InlineData(200, "two hundred")]
+        [InlineData(250, "two hundred and fifty")]
+        [InlineData(299, "two hundred and ninety nine")]
+        ///TODO: REFACTOR
+        public void SutReturnsWordForThreeDigitNumbers(int number, string word)
         {
             var sut = new NumberToWordConverter();
             var actual = sut.Convert(number);

@@ -4,7 +4,7 @@ namespace NumberToWords.Domain
 {
     public class NumberToWordConverter
     {
-        public Dictionary<int, string> numberword = new Dictionary<int, string>()
+        private readonly Dictionary<int, string> numberword = new Dictionary<int, string>()
         {
             {1, "one"},
             {2, "two"},
@@ -25,12 +25,40 @@ namespace NumberToWords.Domain
             {17, "seventeen"},
             {18, "eighteen"},
             {19, "nineteen"},
-            {20, "twenty"}
-    };
- 
+            {20, "twenty"},
+            {30, "thirty"},
+            {40, "fourty"},
+            {50, "fifty"},
+            {60, "sixty"},
+            {70, "seventy"},
+            {80, "eighty"},
+            {90, "ninety"},
+            {100, "one hundred"},
+            {200, "two hundred"},
+            {250, "two hundred and fifty"},
+            {299, "two hundred and ninety nine"},
+
+        };
+
         public string Convert(int number)
         {
-            return numberword[number];
+            if (numberword.ContainsKey(number))
+            {
+                return numberword[number];
+            }
+            else 
+            {
+                var units = number%10;
+                var tens = number - units;
+                if (tens < 100)
+                {
+                    return string.Format("{0} {1}", numberword[tens], numberword[units]);
+                }
+                else
+                {
+                    return string.Format("{0} and {1}", numberword[tens], numberword[units]);
+                }
+            }
         }
     }
     
