@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace NumberToWords.Domain
 {
@@ -33,32 +36,46 @@ namespace NumberToWords.Domain
             {70, "seventy"},
             {80, "eighty"},
             {90, "ninety"},
-            {100, "one hundred"},
-            {200, "two hundred"},
-            {250, "two hundred and fifty"},
-            {299, "two hundred and ninety nine"},
-
+            {100, "hundred"}
         };
 
         public string Convert(int number)
         {
-            if (numberword.ContainsKey(number))
+            var strNumber = number.ToString();
+            var size = strNumber.Length;
+
+            if (size <= 2 && numberword.ContainsKey(number))
             {
                 return numberword[number];
             }
-            else 
+
+            string tens = strNumber[size - 2].ToString();
+            string hundreds = "0";
+            string unit = strNumber.Last().ToString();
+
+            if (size >= 3)
             {
-                var units = number%10;
-                var tens = number - units;
-                if (tens < 100)
-                {
-                    return string.Format("{0} {1}", numberword[tens], numberword[units]);
-                }
-                else
-                {
-                    return string.Format("{0} and {1}", numberword[tens], numberword[units]);
-                }
+                hundreds = strNumber[size - 3].ToString();
             }
+
+            var stringBuilder = new StringBuilder();
+
+            if (hundreds != "0")
+                stringBuilder.Append(numberword[Int32.Parse(hundreds)] + " hundred");
+
+            if (hundreds != "0" && (tens != "0" || unit != "0"))
+                stringBuilder.Append(" and ");
+
+            if (tens != "0")
+                stringBuilder.Append(numberword[Int32.Parse(tens + "0")]);
+
+            if (tens != "0" && unit != "0")
+                stringBuilder.Append(" ");
+
+            if(unit != "0")
+                stringBuilder.Append(numberword[Int32.Parse(unit)]);
+
+            return stringBuilder.ToString();
         }
     }
     

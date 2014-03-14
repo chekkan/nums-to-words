@@ -41,6 +41,7 @@ namespace NumbersToWords.UnitTests
         [InlineData(200, "two hundred")]
         [InlineData(250, "two hundred and fifty")]
         [InlineData(299, "two hundred and ninety nine")]
+        [InlineData(310, "three hundred and ten")]
         ///TODO: REFACTOR
         public void SutReturnsWordForThreeDigitNumbers(int number, string word)
         {
