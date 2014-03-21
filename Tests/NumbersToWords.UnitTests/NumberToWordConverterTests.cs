@@ -23,7 +23,7 @@ namespace NumbersToWords.UnitTests
         [InlineData(21, "twenty one")]
         [InlineData(22, "twenty two")]
         [InlineData(31, "thirty one")]
-        [InlineData(43, "fourty three")]
+        [InlineData(43, "forty three")]
         [InlineData(56, "fifty six")]
         [InlineData(78, "seventy eight")]
         [InlineData(83, "eighty three")]
@@ -44,6 +44,20 @@ namespace NumbersToWords.UnitTests
         [InlineData(310, "three hundred and ten")]
         ///TODO: REFACTOR
         public void SutReturnsWordForThreeDigitNumbers(int number, string word)
+        {
+            var sut = new NumberToWordConverter();
+            var actual = sut.Convert(number);
+            Assert.Equal(word, actual);
+        }
+
+        [Theory]
+        [InlineData(1001, "one thousand and one")]
+        [InlineData(2045, "two thousand and forty five")]
+        //[InlineData(1013, "one thousand and thirteen")]
+        //[InlineData(1103, "one thousand one hundred and three")]
+
+
+        public void SutReturnsWordForFourDigitNumbers(int number, string word)
         {
             var sut = new NumberToWordConverter();
             var actual = sut.Convert(number);
