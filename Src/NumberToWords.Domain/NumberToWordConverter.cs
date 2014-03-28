@@ -96,9 +96,14 @@ namespace NumberToWords.Domain
 
         public void AndRequired(string number, Order order, StringBuilder sb)
         {
+            if (order == Order.Hundred && number.Length == 3 && !number.Contains("00"))
+            {
+                sb.Append(" and ");
+            }
+
             if (number.Contains("0") && number.Last() != '0')
             {
-                if (order == Order.Thousand)
+                if (order == Order.Thousand && number.Length != 3)
                     sb.Append(" and ");
             }
         }

@@ -42,7 +42,6 @@ namespace NumbersToWords.UnitTests
         [InlineData(250, "two hundred and fifty")]
         [InlineData(299, "two hundred and ninety nine")]
         [InlineData(310, "three hundred and ten")]
-        ///TODO: REFACTOR
         public void SutReturnsWordForThreeDigitNumbers(int number, string word)
         {
             var sut = new NumberToWordConverter();
@@ -55,8 +54,6 @@ namespace NumbersToWords.UnitTests
         [InlineData(2045, "two thousand and forty five")]
         //[InlineData(1013, "one thousand and thirteen")]
         //[InlineData(1103, "one thousand one hundred and three")]
-
-
         public void SutReturnsWordForFourDigitNumbers(int number, string word)
         {
             var sut = new NumberToWordConverter();
