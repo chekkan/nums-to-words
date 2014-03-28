@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -67,50 +66,37 @@ namespace NumberToWords.Domain
             }
 
             if (thousands != "0")
-                stringBuilder.Append(numberword[ConvertToInt(thousands)] + " thousand");
+                stringBuilder.Append(numberword[int.Parse(thousands)] + " thousand");
 
-            AndRequired(numberAsString, Order.Thousand, stringBuilder);
-
-            //if (thousands != "0" && (hundreds != "0" || tens != "0" || unit != "0"))
-            //    stringBuilder.Append(" and ");
+            if (IsAndRequired(numberAsString, Order.Thousand))
+                stringBuilder.Append(" and ");
 
             if (hundreds != "0")
-                stringBuilder.Append(numberword[ConvertToInt(hundreds)] + " hundred");
+                stringBuilder.Append(numberword[int.Parse(hundreds)] + " hundred");
 
-            AndRequired(numberAsString, Order.Hundred, stringBuilder);
-
-            //if (hundreds != "0" && (tens != "0" || unit != "0"))
-            //   stringBuilder.Append(" and ");
+            if (IsAndRequired(numberAsString, Order.Hundred))
+                stringBuilder.Append(" and ");
 
             if (tens != "0")
-                stringBuilder.Append(numberword[ConvertToInt(tens + "0")]);
+                stringBuilder.Append(numberword[int.Parse(tens + "0")]);
 
             if (tens != "0" && unit != "0")
                 stringBuilder.Append(" ");
 
             if(unit != "0")
-                stringBuilder.Append(numberword[ConvertToInt(unit)]);
+                stringBuilder.Append(numberword[int.Parse(unit)]);
 
             return stringBuilder.ToString();
         }
 
-        public void AndRequired(string number, Order order, StringBuilder sb)
+        public bool IsAndRequired(string number, Order order)
         {
             if (order == Order.Hundred && number.Length == 3 && !number.Contains("00"))
-            {
-                sb.Append(" and ");
-            }
+                return true;
 
-            if (number.Contains("0") && number.Last() != '0')
-            {
-                if (order == Order.Thousand && number.Length != 3)
-                    sb.Append(" and ");
-            }
-        }
-
-        public int ConvertToInt(string number)
-        {
-            return Int32.Parse(number);
+            return number.Contains("0") && number.Last() != '0' 
+                   && order == Order.Thousand 
+                   && number.Length != 3;
         }
 
         public enum Order

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using NumberToWords.Domain;
 using Xunit;
 using Xunit.Extensions;
@@ -9,14 +7,19 @@ namespace NumbersToWords.UnitTests
 {
     public class NumberToWordConverterTests
     {
+        private readonly NumberToWordConverter sut;
+
+        public NumberToWordConverterTests()
+        {
+            sut = new NumberToWordConverter();
+        }
+
         [Theory]
         [PropertyData("UniqueWordData")]
         public void SutReturnsWordForUniqueNumbers(int number, string word)
         {
-                var harryandhissillyname = new NumberToWordConverter();
-                var actual = harryandhissillyname.Convert(number);
-
-                Assert.Equal(word, actual);
+            var actual = sut.Convert(number);
+            Assert.Equal(word, actual);
         }
 
         [Theory]
@@ -30,7 +33,6 @@ namespace NumbersToWords.UnitTests
         [InlineData(91, "ninety one")]
         public void SutReturnsWordForTwoDigitNumbers(int number, string word)
         {
-            var sut = new NumberToWordConverter();
             var actual = sut.Convert(number);
             Assert.Equal(word, actual);
         }
@@ -44,7 +46,6 @@ namespace NumbersToWords.UnitTests
         [InlineData(310, "three hundred and ten")]
         public void SutReturnsWordForThreeDigitNumbers(int number, string word)
         {
-            var sut = new NumberToWordConverter();
             var actual = sut.Convert(number);
             Assert.Equal(word, actual);
         }
@@ -56,7 +57,6 @@ namespace NumbersToWords.UnitTests
         //[InlineData(1103, "one thousand one hundred and three")]
         public void SutReturnsWordForFourDigitNumbers(int number, string word)
         {
-            var sut = new NumberToWordConverter();
             var actual = sut.Convert(number);
             Assert.Equal(word, actual);
         }
