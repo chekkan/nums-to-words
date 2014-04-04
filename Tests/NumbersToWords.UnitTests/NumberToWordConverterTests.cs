@@ -61,6 +61,19 @@ namespace NumbersToWords.UnitTests
             Assert.Equal(word, actual);
         }
 
+        [Theory]
+        [InlineData(10000, "ten thousand")]
+        [InlineData(73942, "seventy three thousand nine hundred and forty two")]
+        [InlineData(15023, "fifteen thousand and twenty three")]
+        [InlineData(96010,"ninety six thousand and ten")]
+        [InlineData(27101,"twenty seven thousand one hundred and one")]
+        [InlineData(85900, "eighty five thousand nine hundred")]
+        public void ConverterReturnsWordForFiveDigitNumbers(int number, string word)
+        {
+            var actual = _converter.Convert(number);
+            Assert.Equal(word, actual);
+        }
+
         public static IEnumerable<object[]> UniqueWordData
         {
             get

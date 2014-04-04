@@ -54,6 +54,7 @@ namespace NumberToWords.Domain
             string hundreds = "0";
             string thousands = "0";
             string unit = numberAsString.Last().ToString();
+            string tenThousands = "0";
 
             if (size >= 3)
             {
@@ -65,8 +66,16 @@ namespace NumberToWords.Domain
                 var thousandIndex = size - 4;
                 thousands = numberAsString[thousandIndex].ToString();
             }
+            if (size >= 5)
+            {
+                var tenThousandIndex = size - 5;
+                tenThousands = numberAsString[tenThousandIndex].ToString();
+            }
 
-            if (thousands != "0")
+            if (tenThousands != "0")
+                stringBuilder.Append(ConvertTwoDigits(tenThousands + thousands) + " thousand");
+
+            if (thousands != "0" && tenThousands == "0")
                 stringBuilder.Append(numberWang[int.Parse(thousands)] + " thousand");
 
             if (hundreds != "0")
@@ -74,6 +83,7 @@ namespace NumberToWords.Domain
                 if (size >= 4) stringBuilder.Append(" ");
                 stringBuilder.Append(numberWang[int.Parse(hundreds)] + " hundred");
             }
+
             if (IsAndRequired(numberAsString))
                 stringBuilder.Append(" and ");
 
@@ -85,6 +95,9 @@ namespace NumberToWords.Domain
         public bool IsAndRequired(string number)
         {
             if (number.Length == 3 && !number.Contains("00"))
+                return true;
+
+            if (number.Length > 4 && !number.EndsWith("00"))
                 return true;
 
             return number.Contains("0") && number.Last() != '0' 
