@@ -6,7 +6,8 @@ namespace NumberToWords.Domain
 {
     public class NumberToWordConverter
     {
-        private readonly Dictionary<int, string> numberword = new Dictionary<int, string>()
+// ReSharper disable once InconsistentNaming
+        private readonly Dictionary<int, string> numberWang = new Dictionary<int, string>
         {
             {1, "one"},
             {2, "two"},
@@ -44,9 +45,9 @@ namespace NumberToWords.Domain
             var numberAsString = number.ToString();
             var size = numberAsString.Length;
 
-            if (size <= 2 && numberword.ContainsKey(number))
+            if (size <= 2 && numberWang.ContainsKey(number))
             {
-                return numberword[number];
+                return numberWang[number];
             }
 
             string tens = numberAsString[size - 2].ToString();
@@ -66,37 +67,42 @@ namespace NumberToWords.Domain
             }
 
             if (thousands != "0")
-                stringBuilder.Append(numberword[int.Parse(thousands)] + " thousand");
-
-            if (IsAndRequired(numberAsString, Order.Thousand))
-                stringBuilder.Append(" and ");
+                stringBuilder.Append(numberWang[int.Parse(thousands)] + " thousand");
 
             if (hundreds != "0")
-                stringBuilder.Append(numberword[int.Parse(hundreds)] + " hundred");
-
-            if (IsAndRequired(numberAsString, Order.Hundred))
+            {
+                if (size >= 4) stringBuilder.Append(" ");
+                stringBuilder.Append(numberWang[int.Parse(hundreds)] + " hundred");
+            }
+            if (IsAndRequired(numberAsString))
                 stringBuilder.Append(" and ");
 
-            if (tens != "0")
-                stringBuilder.Append(numberword[int.Parse(tens + "0")]);
-
-            if (tens != "0" && unit != "0")
-                stringBuilder.Append(" ");
-
-            if(unit != "0")
-                stringBuilder.Append(numberword[int.Parse(unit)]);
+            stringBuilder.Append(ConvertTwoDigits(tens + unit));
 
             return stringBuilder.ToString();
         }
 
-        public bool IsAndRequired(string number, Order order)
+        public bool IsAndRequired(string number)
         {
-            if (order == Order.Hundred && number.Length == 3 && !number.Contains("00"))
+            if (number.Length == 3 && !number.Contains("00"))
                 return true;
 
             return number.Contains("0") && number.Last() != '0' 
-                   && order == Order.Thousand 
                    && number.Length != 3;
+        }
+
+        public string ConvertTwoDigits(string twoDigitNumberAsString)
+        {
+            if (numberWang.ContainsKey(int.Parse(twoDigitNumberAsString)))
+                return numberWang[int.Parse(twoDigitNumberAsString)];
+
+            var tens = twoDigitNumberAsString.First().ToString();
+            var unit = twoDigitNumberAsString.Last().ToString();
+
+            if (tens != "0")
+                return (numberWang[int.Parse(tens + "0")] + " " + numberWang[int.Parse(unit)]);
+
+            return "";
         }
 
         public enum Order
