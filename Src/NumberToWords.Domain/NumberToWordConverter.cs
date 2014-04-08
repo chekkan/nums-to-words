@@ -117,13 +117,6 @@ namespace NumberToWords.Domain
 
             return "";
         }
-
-        public enum Order
-        {
-            Thousand, 
-            Hundred,
-            Ten
-        }
     }
 
 }
