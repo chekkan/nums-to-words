@@ -3,6 +3,8 @@ using NumberToWords.Domain;
 using Xunit;
 using Xunit.Extensions;
 
+//Kata is cool!!!
+
 namespace NumbersToWords.UnitTests
 {
     public class NumberToWordConverterTests
