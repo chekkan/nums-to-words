@@ -4,9 +4,12 @@ using System.Text;
 
 namespace NumberToWords.Domain
 {
+//Welcome to NumberWang!!! This is where the code makes no sense but through my ingenious words of the numbers I shall help
+// you to understand!!!
     public class NumberToWordConverter
     {
 // ReSharper disable once InconsistentNaming
+        //dictionary of numbers commonly appearing, which make the base to all other numbers.
         private readonly Dictionary<int, string> numberWang = new Dictionary<int, string>
         {
             {1, "one"},
@@ -39,6 +42,7 @@ namespace NumberToWords.Domain
             {100, "hundred"}
         };
 
+        //method to convert number to words.
         public string Convert(int number)
         {
             var stringBuilder = new StringBuilder();
